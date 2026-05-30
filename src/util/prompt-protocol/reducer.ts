@@ -108,6 +108,7 @@ function appendToLastContainer (d: PromptStateData, child: PromptInlineItem | Pr
   const items = d.items.slice()
   const last = items[items.length - 1]
   if (!last || (last.type !== 'row' && last.type !== 'button_group')) return d as unknown as PromptState
-  items[items.length - 1] = { ...last, children: [...(last as any).children, child] } as PromptItem
+  const lastContainer = last as ({ type: 'row'; children: PromptInlineItem[] } | { type: 'button_group'; children: PromptButtonItem[] })
+  items[items.length - 1] = { ...lastContainer, children: [...lastContainer.children, child] } as PromptItem
   return patch(d, { items })
 }
