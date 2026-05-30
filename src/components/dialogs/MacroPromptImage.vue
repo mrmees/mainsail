@@ -16,12 +16,18 @@ import { Component, Mixins, Prop } from 'vue-property-decorator'
 import BaseMixin from '@/components/mixins/base'
 import { escapePath } from '@/plugins/helpers'
 
+// Image base dimension (scale=1) per dialog size — ~dialog width / 3. The image fits a
+// base×base box (object-fit contain) so aspect is kept and height is bounded.
+const SIZE_BASE_PX: Record<string, number> = { small: 133, normal: 200, large: 267, 'x-large': 333 }
+const FULLSCREEN_BASE_VW = 33
+
 @Component({})
 export default class MacroPromptImage extends Mixins(BaseMixin) {
     @Prop({ type: String, required: true }) readonly path!: string
     @Prop({ type: String, default: '' }) readonly alt!: string
     @Prop({ type: Number, default: null }) readonly scale!: number | null
     @Prop({ type: Boolean, default: false }) readonly inline!: boolean
+    @Prop({ type: String, default: 'normal' }) readonly dialogSize!: string
 
     failed = false
 
@@ -32,9 +38,16 @@ export default class MacroPromptImage extends Mixins(BaseMixin) {
         return `${base}/server/files/${escapePath(this.path)}`
     }
 
+    // Box = base(dialog size) × scale (scale null/invalid → 1). Square box, object-fit contain →
+    // aspect preserved and BOTH width and height bounded. full-screen uses vw so it tracks resizes.
     get imgStyle(): Record<string, string> {
-        const max = this.scale && this.scale > 0 ? `${Math.round(this.scale * 100)}%` : '100%'
-        return { maxWidth: max, height: 'auto' }
+        const s = this.scale && this.scale > 0 ? this.scale : 1
+        const size = this.dialogSize || 'normal'
+        const dim =
+            size === 'full-screen'
+                ? `${(FULLSCREEN_BASE_VW * s).toFixed(2)}vw`
+                : `${Math.round((SIZE_BASE_PX[size] ?? SIZE_BASE_PX.normal) * s)}px`
+        return { width: dim, height: dim, objectFit: 'contain' }
     }
 }
 </script>

@@ -24,14 +24,19 @@
                         :key="itemKey(index)"
                         :path="item.path"
                         :alt="item.alt"
-                        :scale="item.scale" />
+                        :scale="item.scale"
+                        :dialog-size="view.size || 'normal'" />
                     <macro-prompt-button
                         v-else-if="item.type === 'button'"
                         :key="itemKey(index)"
                         :label="item.label"
                         :gcode="item.gcode"
                         :button-style="item.style" />
-                    <macro-prompt-row v-else-if="item.type === 'row'" :key="itemKey(index)" :children="item.children" />
+                    <macro-prompt-row
+                        v-else-if="item.type === 'row'"
+                        :key="itemKey(index)"
+                        :children="item.children"
+                        :dialog-size="view.size || 'normal'" />
                     <macro-prompt-button-group
                         v-else-if="item.type === 'button_group'"
                         :key="itemKey(index)"

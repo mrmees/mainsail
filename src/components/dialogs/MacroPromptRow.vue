@@ -12,6 +12,7 @@
                 :path="child.path"
                 :alt="child.alt"
                 :scale="child.scale"
+                :dialog-size="dialogSize"
                 inline />
             <macro-prompt-button
                 v-else-if="child.type === 'button'"
@@ -34,5 +35,6 @@ import MacroPromptButton from '@/components/dialogs/MacroPromptButton.vue'
 @Component({ components: { MacroPromptText, MacroPromptMarkup, MacroPromptImage, MacroPromptButton } })
 export default class MacroPromptRow extends Mixins(BaseMixin) {
     @Prop({ type: Array, required: true }) readonly children!: PromptInlineItem[]
+    @Prop({ type: String, default: 'normal' }) readonly dialogSize!: string
 }
 </script>
