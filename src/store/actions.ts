@@ -13,6 +13,7 @@ export const actions: ActionTree<RootState, RootState> = {
         dispatch('printer/reset')
         dispatch('server/reset')
         dispatch('socket/reset')
+        dispatch('prompt/reset')
 
         const printerSocket = getters['farm/' + payload.printer + '/getSocketData']
 
