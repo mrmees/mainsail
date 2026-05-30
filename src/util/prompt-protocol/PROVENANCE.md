@@ -2,7 +2,7 @@
 
 **Source:** https://github.com/mrmees/klipper-macro-prompt-protocol
 **Path:** `packages/js/src/`
-**Vendored from commit:** `42b68e8` (PR #2, merged into `main` 2026-05-30)
+**Vendored from commit:** `a338315` (branch `feat/prompt-align`, pending PR #4 merge into `main`)
 **Vendored:** 2026-05-30
 
 ## Why vendored, not an npm dependency

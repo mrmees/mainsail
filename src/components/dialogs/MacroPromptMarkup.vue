@@ -18,6 +18,7 @@ export default class MacroPromptMarkup extends Mixins(BaseMixin) {
     @Prop({ type: String, required: true }) readonly markup!: string
     @Prop({ type: String, required: true }) readonly plainText!: string
     @Prop({ type: Boolean, default: false }) readonly inline!: boolean
+    @Prop({ type: String, default: 'center' }) readonly align!: string
 
     get ast(): MarkupNode[] {
         try {
@@ -58,7 +59,7 @@ export default class MacroPromptMarkup extends Mixins(BaseMixin) {
         // through that transform, so we must reference the imported VRow/VCol options directly —
         // string tags 'v-row'/'v-col' would resolve as unknown elements at runtime.
         if (this.inline) return content
-        return h(VRow, { props: { noGutters: true } }, [h(VCol, { staticClass: 'py-1' }, [content])])
+        return h(VRow, { props: { noGutters: true } }, [h(VCol, { staticClass: 'py-1', class: ['text-' + this.align] }, [content])])
     }
 }
 </script>

@@ -1,9 +1,10 @@
-import type { PromptEvent, PromptSize } from './types'
+import type { PromptAlign, PromptEvent, PromptSize } from './types'
 import { parseButtonFields } from './button'
 import { parseImageScale } from './image'
 import { markupToPlainText } from './markup'
 
 const SIZES: readonly PromptSize[] = ['small', 'normal', 'large', 'x-large', 'full-screen']
+const ALIGNS: readonly PromptAlign[] = ['left', 'center', 'right']
 const PREFIX = '// action:prompt_'
 
 export function disconnectEvent (): PromptEvent { return { kind: 'disconnect' } }
@@ -49,6 +50,10 @@ export function parseAction (line: string): PromptEvent | null {
     case 'size': {
       const v = arg.trim().toLowerCase()
       return { kind: 'size', size: (SIZES as readonly string[]).includes(v) ? (v as PromptSize) : null }
+    }
+    case 'align': {
+      const v = arg.trim().toLowerCase()
+      return { kind: 'align', align: (ALIGNS as readonly string[]).includes(v) ? (v as PromptAlign) : null }
     }
     default: return null   // unknown prompt_* command: ignored
   }

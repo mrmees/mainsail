@@ -13,19 +13,25 @@
             </template>
             <v-card-text class="text-center">
                 <template v-for="(item, index) in view.items">
-                    <macro-prompt-text v-if="item.type === 'text'" :key="itemKey(index)" :text="item.text" />
+                    <macro-prompt-text
+                        v-if="item.type === 'text'"
+                        :key="itemKey(index)"
+                        :text="item.text"
+                        :align="item.align || 'center'" />
                     <macro-prompt-markup
                         v-else-if="item.type === 'markup'"
                         :key="itemKey(index)"
                         :markup="item.markup"
-                        :plain-text="item.plain_text" />
+                        :plain-text="item.plain_text"
+                        :align="item.align || 'center'" />
                     <macro-prompt-image
                         v-else-if="item.type === 'image'"
                         :key="itemKey(index)"
                         :path="item.path"
                         :alt="item.alt"
                         :scale="item.scale"
-                        :dialog-size="view.size || 'normal'" />
+                        :dialog-size="view.size || 'normal'"
+                        :align="item.align || 'center'" />
                     <macro-prompt-button
                         v-else-if="item.type === 'button'"
                         :key="itemKey(index)"

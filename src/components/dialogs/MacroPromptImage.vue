@@ -4,7 +4,7 @@
         <span v-else-if="alt">{{ alt }}</span>
     </span>
     <v-row v-else no-gutters>
-        <v-col class="text-center py-1">
+        <v-col :class="['py-1', 'text-' + align]">
             <img v-if="!failed" :src="url" :alt="alt" :style="imgStyle" @error="failed = true" />
             <p v-else-if="alt" class="ma-0">{{ alt }}</p>
         </v-col>
@@ -28,6 +28,7 @@ export default class MacroPromptImage extends Mixins(BaseMixin) {
     @Prop({ type: Number, default: null }) readonly scale!: number | null
     @Prop({ type: Boolean, default: false }) readonly inline!: boolean
     @Prop({ type: String, default: 'normal' }) readonly dialogSize!: string
+    @Prop({ type: String, default: 'center' }) readonly align!: string
 
     failed = false
 
