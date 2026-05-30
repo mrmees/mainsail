@@ -1,35 +1,35 @@
 <template>
-    <v-btn :color="color" class="ma-2" @click="sendCommand">{{ text }}</v-btn>
+    <v-btn :color="color" class="ma-2" @click="sendGcode">{{ label }}</v-btn>
 </template>
 
 <script lang="ts">
 import { Component, Mixins, Prop } from 'vue-property-decorator'
 import BaseMixin from '@/components/mixins/base'
-import { ServerStateEventPrompt } from '@/store/server/types'
+import type { PromptStyle } from '@/util/prompt-protocol'
+
+// Map protocol semantic styles to Vuetify colors. 'secondary' → default (no color).
+const STYLE_COLORS: Record<PromptStyle, string> = {
+    primary: 'primary',
+    secondary: '',
+    info: 'info',
+    warning: 'warning',
+    error: 'error',
+    success: 'success',
+}
 
 @Component({})
 export default class MacroPromptButton extends Mixins(BaseMixin) {
-    @Prop({ type: Object, required: true }) readonly event!: ServerStateEventPrompt
+    @Prop({ type: String, required: true }) readonly label!: string
+    @Prop({ type: String, required: true }) readonly gcode!: string
+    @Prop({ type: String, default: 'secondary' }) readonly buttonStyle!: PromptStyle
 
-    get splits() {
-        return this.event.message.split('|')
+    get color(): string {
+        return STYLE_COLORS[this.buttonStyle] ?? ''
     }
 
-    get text() {
-        return this.splits[0]
-    }
-
-    get command() {
-        return this.splits[1] ?? this.text
-    }
-
-    get color() {
-        return this.splits[2] ?? ''
-    }
-
-    sendCommand() {
-        this.$store.dispatch('server/addEvent', { message: this.command, type: 'command' })
-        this.$socket.emit('printer.gcode.script', { script: this.command })
+    sendGcode() {
+        this.$store.dispatch('server/addEvent', { message: this.gcode, type: 'command' })
+        this.$socket.emit('printer.gcode.script', { script: this.gcode })
     }
 }
 </script>
