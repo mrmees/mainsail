@@ -40,8 +40,9 @@ export const actions: ActionTree<SocketState, RootState> = {
             commit('server/updateManager/setStatus', { busy: false }, { root: true })
     },
 
-    onClose({ commit }) {
+    onClose({ commit, dispatch }) {
         commit('setDisconnected')
+        dispatch('prompt/reset', null, { root: true })
     },
 
     onMessage({ commit, dispatch }, payload) {
@@ -50,11 +51,16 @@ export const actions: ActionTree<SocketState, RootState> = {
                 dispatch('printer/getData', payload.params[0], { root: true })
                 break
 
-            case 'notify_gcode_response':
-                dispatch('server/addEvent', Object.assign({ result: payload.params[0] }, { send: false }), {
+            case 'notify_gcode_response': {
+                const line = payload.params[0]
+                dispatch('server/addEvent', Object.assign({ result: line }, { send: false }), {
                     root: true,
                 })
+                if (typeof line === 'string' && line.startsWith('// action:prompt_')) {
+                    dispatch('prompt/ingestRawLine', line, { root: true })
+                }
                 break
+            }
 
             case 'notify_klippy_ready':
                 commit('server/setKlippyConnected', null, { root: true })
