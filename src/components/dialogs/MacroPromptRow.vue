@@ -1,5 +1,5 @@
 <template>
-    <v-row no-gutters align="center">
+    <v-row no-gutters align="center" :justify="justify">
         <v-col v-for="(child, index) in children" :key="index" class="text-center px-1">
             <macro-prompt-text v-if="child.type === 'text'" :text="child.text" inline />
             <macro-prompt-markup
@@ -36,5 +36,14 @@ import MacroPromptButton from '@/components/dialogs/MacroPromptButton.vue'
 export default class MacroPromptRow extends Mixins(BaseMixin) {
     @Prop({ type: Array, required: true }) readonly children!: PromptInlineItem[]
     @Prop({ type: String, default: 'normal' }) readonly dialogSize!: string
+    // Top-level prompt_align. Cells span full width so this is center-equivalent today, but it is
+    // wired through so the container honors alignment per spec and stays forward-compatible.
+    @Prop({ type: String, default: 'center' }) readonly align!: string
+
+    get justify(): string {
+        if (this.align === 'left') return 'start'
+        if (this.align === 'right') return 'end'
+        return 'center'
+    }
 }
 </script>

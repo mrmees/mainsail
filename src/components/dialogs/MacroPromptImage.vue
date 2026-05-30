@@ -4,7 +4,7 @@
         <span v-else-if="alt">{{ alt }}</span>
     </span>
     <v-row v-else no-gutters>
-        <v-col :class="['py-1', 'text-' + align]">
+        <v-col :class="['py-1', 'd-flex', justifyClass]">
             <img v-if="!failed" :src="url" :alt="alt" :style="imgStyle" @error="failed = true" />
             <p v-else-if="alt" class="ma-0">{{ alt }}</p>
         </v-col>
@@ -37,6 +37,15 @@ export default class MacroPromptImage extends Mixins(BaseMixin) {
     get url(): string {
         const base = this.$store.getters['socket/getUrl']
         return `${base}/server/files/${escapePath(this.path)}`
+    }
+
+    // A sized <img> is a replaced/block-level element, so `text-align` on the column cannot move it
+    // (and a fixed-width block defaults flush-left). Position it with a flex justify class instead.
+    // Center is the spec default — top-level items are centered unless prompt_align says otherwise.
+    get justifyClass(): string {
+        if (this.align === 'left') return 'justify-start'
+        if (this.align === 'right') return 'justify-end'
+        return 'justify-center'
     }
 
     // Box = base(dialog size) × scale (scale null/invalid → 1). Square box, object-fit contain →

@@ -37,16 +37,19 @@
                         :key="itemKey(index)"
                         :label="item.label"
                         :gcode="item.gcode"
-                        :button-style="item.style" />
+                        :button-style="item.style"
+                        :align="item.align || 'center'" />
                     <macro-prompt-row
                         v-else-if="item.type === 'row'"
                         :key="itemKey(index)"
                         :children="item.children"
-                        :dialog-size="view.size || 'normal'" />
+                        :dialog-size="view.size || 'normal'"
+                        :align="item.align || 'center'" />
                     <macro-prompt-button-group
                         v-else-if="item.type === 'button_group'"
                         :key="itemKey(index)"
-                        :children="item.children" />
+                        :children="item.children"
+                        :align="item.align || 'center'" />
                 </template>
             </v-card-text>
             <v-card-actions v-if="view.footer_buttons.length">
