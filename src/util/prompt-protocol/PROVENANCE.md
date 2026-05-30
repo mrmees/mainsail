@@ -10,9 +10,13 @@ Mainsail compiles this TS source in its own Vite pipeline, so its `build.target`
 governs the output — no external runtime dependency, no built-package/`.d.ts` concerns. The
 canonical conformance fixtures (`tests/unit/prompt-protocol/fixtures.json`) keep this copy honest.
 
-## Local modification
-Relative import `.js` extensions (NodeNext, needed by the upstream npm build) are stripped on
-vendor so Mainsail's bundler resolves the `.ts` files. This is the ONLY change from upstream.
+## Local modifications
+1. **`.js` import extensions stripped.** Relative import `.js` extensions (NodeNext, needed by the
+   upstream npm build) are removed so Mainsail's bundler resolves the `.ts` files.
+2. **`reducer.ts` `as any` narrowed (lint parity).** Upstream `appendToLastContainer` used
+   `(last as any).children`, which Mainsail's `@typescript-eslint/no-explicit-any` rejects. Replaced
+   with an explicit narrowed union type — behavior-identical, conformance-verified. **TODO: upstream
+   this to the protocol repo** so future re-syncs need no local edit.
 
 ## Update procedure
 1. Re-copy `packages/js/src/*.ts` from the source commit and re-run the `.js`-strip sed.
