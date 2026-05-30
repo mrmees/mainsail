@@ -138,10 +138,12 @@ export const actions: ActionTree<ServerState, RootState> = {
         commit('setKlippyDisconnected', null)
         dispatch('stopKlippyStateInterval')
         dispatch('startKlippyConnectedInterval')
+        dispatch('prompt/reset', null, { root: true })
     },
 
     setKlippyShutdown({ commit, dispatch }) {
         commit('setKlippyShutdown', null)
+        dispatch('prompt/reset', null, { root: true })
         dispatch('stopKlippyStateInterval')
         dispatch('startKlippyConnectedInterval')
     },
@@ -238,6 +240,7 @@ export const actions: ActionTree<ServerState, RootState> = {
         })
 
         commit('setGcodeStore', events)
+        dispatch('prompt/replayGcodeStore', payload.gcode_store, { root: true })
         dispatch('socket/removeInitModule', 'server/gcode_store', { root: true })
     },
 
