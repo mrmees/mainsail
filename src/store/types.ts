@@ -1,4 +1,5 @@
 import { SocketState } from '@/store/socket/types'
+import { PromptModuleState } from '@/store/prompt/types'
 import { ServerState } from '@/store/server/types'
 import { PrinterState } from '@/store/printer/types'
 import { GuiState } from '@/store/gui/types'
@@ -16,6 +17,7 @@ export interface RootState {
     printer?: PrinterState
     server?: ServerState
     editor?: EditorState
+    prompt?: PromptModuleState
 }
 
 export interface RootStateDependency {
