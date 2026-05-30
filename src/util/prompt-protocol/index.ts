@@ -7,5 +7,6 @@ export { parseButtonFields } from './button'
 export { isValidImagePath, parseImageScale } from './image'
 export type {
   PromptView, PromptItem, PromptInlineItem, PromptButtonItem, PromptFooterButton,
-  PromptStyle, PromptSize, PromptTextSize, PromptEvent, PromptState, EngineOptions, MarkupNode
+  PromptStyle, PromptSize, PromptTextSize, PromptAlign, PromptItemAlign,
+  PromptEvent, PromptState, EngineOptions, MarkupNode
 } from './types'

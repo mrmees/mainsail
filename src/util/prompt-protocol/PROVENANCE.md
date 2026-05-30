@@ -2,8 +2,8 @@
 
 **Source:** https://github.com/mrmees/klipper-macro-prompt-protocol
 **Path:** `packages/js/src/`
-**Vendored from commit:** `a338315` (branch `feat/prompt-align`, pending PR #4 merge into `main`)
-**Vendored:** 2026-05-30
+**Vendored from commit:** `d6cc0d9` (`main`, after PR #3 centered-default layout + PR #4 `prompt_align` merged)
+**Vendored:** 2026-05-30 (re-synced from `main` after the pre-merge `feat/prompt-align` vendor at `a338315`)
 
 ## Why vendored, not an npm dependency
 Mainsail compiles this TS source in its own Vite pipeline, so its `build.target` (safari12)
@@ -13,10 +13,12 @@ canonical conformance fixtures (`tests/unit/prompt-protocol/fixtures.json`) keep
 ## Local modifications
 1. **`.js` import extensions stripped.** Relative import `.js` extensions (NodeNext, needed by the
    upstream npm build) are removed so Mainsail's bundler resolves the `.ts` files.
-2. **`reducer.ts` `as any` narrowed (lint parity).** Upstream `appendToLastContainer` used
-   `(last as any).children`, which Mainsail's `@typescript-eslint/no-explicit-any` rejects. Replaced
-   with an explicit narrowed union type — behavior-identical, conformance-verified. **TODO: upstream
-   this to the protocol repo** so future re-syncs need no local edit.
+2. **`reducer.ts` `as any` narrowed (lint parity).** Upstream `appendToLastContainer` (line ~119 on
+   `main` `d6cc0d9`) still uses `(last as any).children`, which Mainsail's
+   `@typescript-eslint/no-explicit-any` rejects. Replaced with an explicit narrowed container type
+   (`{ type: 'row' | 'button_group'; children: (PromptInlineItem | PromptButtonItem)[]; align?: PromptAlign }`)
+   — behavior-identical, conformance-verified. Confirmed NOT yet upstreamed as of `d6cc0d9`, so this
+   edit must be re-applied on every re-sync. **TODO: upstream this to the protocol repo.**
 
 ## Update procedure
 1. Re-copy `packages/js/src/*.ts` from the source commit and re-run the `.js`-strip sed.
