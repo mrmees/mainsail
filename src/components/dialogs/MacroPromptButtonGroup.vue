@@ -1,10 +1,7 @@
 <template>
-    <v-row>
-        <v-col class="text-center py-0">
-            <macro-prompt-button
-                v-for="(button, index) in children"
-                :key="'prompt_' + groupIndex + '_' + index"
-                :event="button" />
+    <v-row no-gutters>
+        <v-col v-for="(button, index) in children" :key="index" class="text-center px-1">
+            <macro-prompt-button :label="button.label" :gcode="button.gcode" :button-style="button.style" block />
         </v-col>
     </v-row>
 </template>
@@ -12,11 +9,11 @@
 <script lang="ts">
 import { Component, Mixins, Prop } from 'vue-property-decorator'
 import BaseMixin from '@/components/mixins/base'
-import { ServerStateEventPrompt } from '@/store/server/types'
+import type { PromptButtonItem } from '@/util/prompt-protocol'
+import MacroPromptButton from '@/components/dialogs/MacroPromptButton.vue'
 
-@Component({})
-export default class MacroPromptButton extends Mixins(BaseMixin) {
-    @Prop({ type: Array, required: true }) readonly children!: ServerStateEventPrompt[]
-    @Prop({ type: Number, required: true }) readonly groupIndex!: number
+@Component({ components: { MacroPromptButton } })
+export default class MacroPromptButtonGroup extends Mixins(BaseMixin) {
+    @Prop({ type: Array, required: true }) readonly children!: PromptButtonItem[]
 }
 </script>
