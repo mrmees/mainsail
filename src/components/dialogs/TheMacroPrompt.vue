@@ -11,7 +11,7 @@
                     <v-icon>{{ mdiCloseThick }}</v-icon>
                 </v-btn>
             </template>
-            <v-card-text>
+            <v-card-text class="text-center">
                 <template v-for="(item, index) in view.items">
                     <macro-prompt-text v-if="item.type === 'text'" :key="itemKey(index)" :text="item.text" />
                     <macro-prompt-markup

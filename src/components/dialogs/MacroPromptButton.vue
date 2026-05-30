@@ -1,5 +1,5 @@
 <template>
-    <v-btn :color="color" :block="block" class="ma-2" @click="sendGcode">{{ label }}</v-btn>
+    <v-btn :color="color" :block="block" class="my-1" @click="sendGcode">{{ label }}</v-btn>
 </template>
 
 <script lang="ts">
@@ -22,7 +22,8 @@ export default class MacroPromptButton extends Mixins(BaseMixin) {
     @Prop({ type: String, required: true }) readonly label!: string
     @Prop({ type: String, required: true }) readonly gcode!: string
     @Prop({ type: String, default: 'secondary' }) readonly buttonStyle!: PromptStyle
-    @Prop({ type: Boolean, default: false }) readonly block!: boolean
+    // Content buttons fill their cell/container by default (spec: not label-sized).
+    @Prop({ type: Boolean, default: true }) readonly block!: boolean
 
     get color(): string {
         return STYLE_COLORS[this.buttonStyle] ?? ''

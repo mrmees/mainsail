@@ -49,7 +49,7 @@ export default class MacroPromptMarkup extends Mixins(BaseMixin) {
     render(h: CreateElement): VNode {
         const content = h(
             'p',
-            { staticClass: 'mb-0', class: { 'd-inline-block': this.inline }, style: { whiteSpace: 'pre-wrap' } },
+            { staticClass: 'ma-0', class: { 'd-inline-block': this.inline }, style: { whiteSpace: 'pre-wrap' } },
             this.ast.map((n) => this.renderNode(h, n))
         )
         // Inline (inside a row): no grid wrapper. Otherwise wrap as a block row.
@@ -58,7 +58,7 @@ export default class MacroPromptMarkup extends Mixins(BaseMixin) {
         // through that transform, so we must reference the imported VRow/VCol options directly —
         // string tags 'v-row'/'v-col' would resolve as unknown elements at runtime.
         if (this.inline) return content
-        return h(VRow, [h(VCol, { staticClass: 'py-1' }, [content])])
+        return h(VRow, { props: { noGutters: true } }, [h(VCol, { staticClass: 'py-1' }, [content])])
     }
 }
 </script>

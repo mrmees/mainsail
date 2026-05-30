@@ -3,10 +3,10 @@
         <img v-if="!failed" :src="url" :alt="alt" :style="imgStyle" @error="failed = true" />
         <span v-else-if="alt">{{ alt }}</span>
     </span>
-    <v-row v-else>
+    <v-row v-else no-gutters>
         <v-col class="text-center py-1">
             <img v-if="!failed" :src="url" :alt="alt" :style="imgStyle" @error="failed = true" />
-            <p v-else-if="alt" class="mb-0">{{ alt }}</p>
+            <p v-else-if="alt" class="ma-0">{{ alt }}</p>
         </v-col>
     </v-row>
 </template>

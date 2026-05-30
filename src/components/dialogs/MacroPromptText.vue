@@ -1,8 +1,8 @@
 <template>
-    <p v-if="inline" class="mb-0 d-inline-block" style="white-space: pre-wrap">{{ text }}</p>
-    <v-row v-else>
-        <v-col>
-            <p class="mb-0" style="white-space: pre-wrap">{{ text }}</p>
+    <p v-if="inline" class="ma-0 d-inline-block" style="white-space: pre-wrap">{{ text }}</p>
+    <v-row v-else no-gutters>
+        <v-col class="py-1">
+            <p class="ma-0" style="white-space: pre-wrap">{{ text }}</p>
         </v-col>
     </v-row>
 </template>
