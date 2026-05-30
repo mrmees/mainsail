@@ -15,6 +15,10 @@ export const actions: ActionTree<PromptModuleState, RootState> = {
     },
 
     // Rebuild prompt state from the buffered gcode_store on (re)connect.
+    // This is authoritative: per the protocol's reset-then-replay reconnect model, it rebuilds from
+    // a fresh state over buffered history. A live prompt_begin arriving in the brief window between
+    // the gcode_store snapshot and this commit could be overwritten, but Moonraker's snapshot
+    // normally already contains it, so it is recovered here.
     replayGcodeStore({ commit }, gcodeStore: Array<{ type?: string; message: string }>) {
         let s = initialPromptState(ENGINE_OPTS)
         for (const entry of gcodeStore ?? []) {

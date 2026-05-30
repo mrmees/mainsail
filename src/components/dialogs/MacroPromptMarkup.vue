@@ -1,6 +1,7 @@
 <script lang="ts">
 import { Component, Mixins, Prop } from 'vue-property-decorator'
 import { CreateElement, VNode } from 'vue'
+import { VRow, VCol } from 'vuetify/lib'
 import BaseMixin from '@/components/mixins/base'
 import { parseMarkup } from '@/util/prompt-protocol'
 import type { MarkupNode } from '@/util/prompt-protocol'
@@ -52,8 +53,12 @@ export default class MacroPromptMarkup extends Mixins(BaseMixin) {
             this.ast.map((n) => this.renderNode(h, n))
         )
         // Inline (inside a row): no grid wrapper. Otherwise wrap as a block row.
+        // NOTE: Vuetify components are NOT globally registered (Mainsail auto-imports them into
+        // <template> blocks via unplugin-vue-components). A hand-written render function never goes
+        // through that transform, so we must reference the imported VRow/VCol options directly —
+        // string tags 'v-row'/'v-col' would resolve as unknown elements at runtime.
         if (this.inline) return content
-        return h('v-row', [h('v-col', { staticClass: 'py-1' }, [content])])
+        return h(VRow, [h(VCol, { staticClass: 'py-1' }, [content])])
     }
 }
 </script>
