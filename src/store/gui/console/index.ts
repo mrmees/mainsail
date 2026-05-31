@@ -9,6 +9,7 @@ export const getDefaultState = (): GuiConsoleState => {
     return {
         hideWaitTemperatures: true,
         hideTlCommands: true,
+        hidePromptCommands: false,
         direction: 'table',
         entryStyle: 'default',
         height: 300,

@@ -25,6 +25,10 @@ export const getters: GetterTree<GuiConsoleState, RootState> = {
                 output.push(rule)
             })
 
+        // Matches both the raw gcode_store form ("// action:prompt_…") and the live console form,
+        // which formatConsoleMessage() has already stripped of its leading "// ".
+        if (rootState.gui?.console?.hidePromptCommands) output.push('^(?:// )?action:prompt')
+
         Object.keys(state.consolefilters).forEach((id: string) => {
             const filter = state.consolefilters[id]
             if (filter.bool) {

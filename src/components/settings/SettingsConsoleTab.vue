@@ -60,6 +60,12 @@
                     </settings-row>
                 </template>
                 <v-divider class="my-2"></v-divider>
+                <settings-row
+                    :title="$t('Settings.ConsoleTab.HidePromptCommands').toString()"
+                    :dynamic-slot-width="true">
+                    <v-switch v-model="hidePromptCommands" hide-details class="mt-0"></v-switch>
+                </settings-row>
+                <v-divider class="my-2"></v-divider>
                 <div v-for="(filter, index) in consoleFilters" :key="index">
                     <v-divider v-if="index" class="my-2"></v-divider>
                     <settings-row :title="filter.name">
@@ -255,6 +261,14 @@ export default class SettingsConsoleTab extends Mixins(BaseMixin) {
 
     set hideTimelapse(newVal) {
         this.$store.dispatch('gui/console/saveSetting', { name: 'hideTlCommands', value: newVal })
+    }
+
+    get hidePromptCommands() {
+        return this.$store.state.gui.console.hidePromptCommands
+    }
+
+    set hidePromptCommands(newVal) {
+        this.$store.dispatch('gui/console/saveSetting', { name: 'hidePromptCommands', value: newVal })
     }
 
     existsPresetName(name: string) {

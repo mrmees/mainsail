@@ -2,6 +2,7 @@ export interface GuiConsoleState {
     cleared_since?: number
     hideWaitTemperatures: boolean
     hideTlCommands: boolean
+    hidePromptCommands: boolean
     direction: 'table' | 'shell'
     entryStyle: 'default' | 'compact'
     height: number

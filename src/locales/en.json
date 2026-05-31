@@ -170,6 +170,7 @@
         "Empty": "Empty",
         "HideTemperatures": "Hide temperatures",
         "HideTimelapse": "Hide Timelapse",
+        "HidePromptCommands": "Hide prompt commands",
         "Search": "Search",
         "SetupConsole": "Setup Console"
     },
@@ -752,6 +753,7 @@
             "Headline": "Console",
             "HideTemperatures": "Hide temperatures",
             "HideTimelapse": "Hide Timelapse",
+            "HidePromptCommands": "Hide prompt commands",
             "RawOutput": "RAW-Output (for debugging)",
             "SendCode": "Send code...",
             "SetupConsole": "Setup Console"
@@ -1149,6 +1151,7 @@
             "Height": "Height",
             "HideTemperatures": "Hide temperatures",
             "HideTimelapse": "Hide Timelapse",
+            "HidePromptCommands": "Hide prompt commands",
             "Name": "Name",
             "Regex": "Regex",
             "StoreButton": "Store filter",

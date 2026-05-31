@@ -35,6 +35,14 @@ export default class ConsoleMixin extends Vue {
         this.$store.dispatch('gui/saveSetting', { name: 'console.hideTlCommands', value: newVal })
     }
 
+    get hidePromptCommands(): boolean {
+        return this.$store.state.gui.console.hidePromptCommands
+    }
+
+    set hidePromptCommands(newVal) {
+        this.$store.dispatch('gui/saveSetting', { name: 'console.hidePromptCommands', value: newVal })
+    }
+
     get customFilters() {
         return this.$store.state.gui.console.consolefilters ?? {}
     }
